@@ -35,19 +35,9 @@
             </div>
             <div class="collapse navbar-collapse navbar-right navbar-main-collapse">
                 <ul class="nav navbar-nav">
-                    <li class="hidden">
-                        <a href="#page-top"></a>
-                    </li>
+                    <li><a class="page-scroll" href="index.html#about">About</a></li>
                      <li class="activess"><a href="portfolio.html">Portfolio</a></li>
-                    </li>
-                    <li>
-                        <a class="page-scroll" href="index.html#about">About</a>
-                    </li>
-                    <li>
-
-                    <li>
-                        <a class="page-scroll" href="index.html#contact">Contact</a>
-                    </li>
+                    <li><a class="page-scroll" href="index.html#contact">Contact</a></li>
                 </ul>
             </div>
         </div>
@@ -197,22 +187,40 @@
             // Re-layout after images load
             $grid.imagesLoaded().progress(() => $grid.isotope('layout'));
 
-            // Filter Navigation
-            $('.filter-btn').on('click', function () {
-                $('.filter-btn').removeClass('active');
-                $(this).addClass('active');
-                const f = $(this).attr('data-filter');
-                $grid.isotope({ filter: f === '*' ? '*' : '.' + f });
-            });
+// --- UPDATED FILTER NAVIGATION ---
+    $('.filter-btn').on('click', function() {
+        $('.filter-btn').removeClass('active');
+        $(this).addClass('active');
+        
+        const f = $(this).attr('data-filter');
+        
+        // 1. Run Isotope Filter
+        $grid.isotope({ filter: f === '*' ? '*' : '.' + f });
 
-            // Lightbox Configuration
-            lightbox.option({
-                'disableScrolling': false, // SET TO FALSE TO ALLOW BACKGROUND SCROLLING
-                'alwaysShowNavOnTouchDevices': true,
-                'wrapAround': true,
-                'positionFromTop': 0
-            });
-        });
+        // 2. FIX: Dynamic Lightbox Grouping
+        // This ensures the popup only shows images from the active tab
+        if (f === '*') {
+            // If "All" is selected, group everything under one name
+            $('.gallery-item a').attr('data-lightbox', 'console-gallery');
+        } else {
+            // Set filtered items to a unique group name
+            // Set hidden items to a different name so they don't show in popup
+            $('.gallery-item a').attr('data-lightbox', 'hidden-gallery'); 
+            $('.' + f + ' a').attr('data-lightbox', f + '-gallery');
+        }
+    });
+
+    // Lightbox Configuration
+    lightbox.option({ 
+        'resizeDuration': 0,          // STOP the shaking by making resize instant
+        'fadeDuration': 200,          // Quick fade is smoother than a slow jump
+        'imageFadeDuration': 200, 
+        'disableScrolling': false, 
+        'alwaysShowNavOnTouchDevices': true, 
+        'wrapAround': true,
+        'positionFromTop': 0
+    });
+});
     </script>
 
 </body>

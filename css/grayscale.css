@@ -322,6 +322,7 @@ li.activess a {
   border: 1px solid #42dca3;
   color: #42dca3;
   background-color: transparent;
+  font-size: 12px;
 }
 
 .btn-default:hover,
