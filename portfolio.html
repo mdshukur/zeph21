@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fixed Center Lightbox - Scroll Enabled</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="css/grayscale.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.2.0/css/font-awesome.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css">
+</head>
+
+<body>
+
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-custom navbar-fixed-top" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse">
+                    <i class="fa fa-bars"></i>
+                </button>
+                    <div class="navbar-header">
+                    <a class="navbar-brand page-scroll" href="index.html">
+                        <img src="img/logo2.gif" alt="" style="display:inline-block; height:42px; margin-top:-10px;">
+                        <span class="light">logo title</span>
+                    </a>
+                    </div>
+            </div>
+            <div class="collapse navbar-collapse navbar-right navbar-main-collapse">
+                <ul class="nav navbar-nav">
+                    <li class="hidden">
+                        <a href="#page-top"></a>
+                    </li>
+                     <li class="activess"><a href="portfolio.html">Portfolio</a></li>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="index.html#about">About</a>
+                    </li>
+                    <li>
+
+                    <li>
+                        <a class="page-scroll" href="index.html#contact">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+
+    <div class="content-section">
+        <div class="container">
+            <div class="hero-section text-center">
+                    <h1>OUR PORTFOLIOS</h1>
+                <a href="#portfolio-sec" class="btn btn-circle page-scroll">
+                    <i class="fa fa-angle-double-down animated"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+
+
+   <section class="content-section" id="portfolio-sec">
+    <div class="container">
+          <div class="contentes text-center">
+            <h2>The Collection</h2>
+            <p>Discover handheld classics that defined generations—where design, innovation, and nostalgia meet.</p>
+          </div>
+        
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="filter-nav">
+                    <button class="filter-btn active" data-filter="*">All</button>
+                    <button class="filter-btn" data-filter="gbp">Gameboy Pocket</button>
+                    <button class="filter-btn" data-filter="gba">Gameboy Advance</button>
+                    <button class="filter-btn" data-filter="sp">GBA SP</button>
+                    <button class="filter-btn" data-filter="nds">NDS Lite</button>
+                    <button class="filter-btn" data-filter="other">Others</button>
+                </div>
+            </div>
+        </div>
+        <div id="js-gallery-grid" class="row gallery-grid"></div>
+    </div>
+   </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container text-center">
+            <p>Copyright &copy; Your Website 2014</p>
+        </div>
+    </footer>
+
+
+
+    <script src="js/jquery.js"></script>
+    <!-- Bootstrap Core JavaScript -->
+    <script src="js/bootstrap.min.js"></script>
+    <!-- Plugin JavaScript -->
+    <script src="js/jquery.easing.min.js"></script>
+    <script src="https://unpkg.com/isotope-layout@3/dist/isotope.pkgd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.4/imagesloaded.pkgd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js"></script>
+
+    <!-- Custom Theme JavaScript -->
+    <script src="js/grayscale.js"></script>
+
+    <script>
+        const galleryConfig = {
+
+            // Replace 'https://placehold.net/default.png' with your actual image paths.
+
+            gbp: {
+                title: "Gameboy Pocket",
+                images: [
+                    "img/gameboy-advance/gameboy-advance.png",
+                    "img/gameboy-advance/gameboy-advance.png",
+                    "img/gameboy-advance/gameboy-advance.png",
+                    "img/gameboy-advance/gameboy-advance.png"
+                ]
+            },
+            gba: {
+                title: "Gameboy Advance",
+                images: [
+                    "img/gameboy-pocket/gameboy-pocket.png",
+                    "img/gameboy-pocket/gameboy-pocket.png",
+                    "img/gameboy-pocket/gameboy-pocket.png",
+                    "img/gameboy-pocket/gameboy-pocket.png"
+                ]
+            },
+            sp: {
+                title: "GBA SP",
+                images: [
+                    "img/gba-sp/gba-sp.png",
+                    "img/gba-sp/gba-sp.png",
+                    "img/gba-sp/gba-sp.png",
+                    "img/gba-sp/gba-sp.png"
+                ]
+            },
+            nds: {
+                title: "NDS Lite",
+                images: [
+                    "img/nds-lite/nds-lite.png",
+                    "img/nds-lite/nds-lite.png",
+                    "img/nds-lite/nds-lite.png",
+                    "img/nds-lite/nds-lite.png"
+                ]
+            },
+            other: {
+                title: "Others",
+                images: [
+                    "img/others/others.png",
+                    "img/others/others.png",
+                    "img/others/others.png",
+                    "img/others/others.png"
+                ]
+            }
+        };
+
+        $(document).ready(function () {
+            const $container = $('#js-gallery-grid');
+
+            // Generate HTML from JSON
+            let allItems = [];
+            $.each(galleryConfig, function (category, content) {
+                content.images.forEach((path, i) => {
+                    allItems.push(`
+                <div class="col-md-3 col-sm-6 col-xs-6 gallery-item ${category}">
+                    <a href="${path}" data-lightbox="console-gallery" data-title="${content.title}">
+                        <div class="img-container">
+                            <img src="${path}" class="img-responsive">
+                            <div class="hover-overlay"><i class="fa fa-plus"></i></div>
+                        </div>
+                    </a>
+                </div>`);
+                });
+            });
+
+            // Shuffle images once
+            for (let i = allItems.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [allItems[i], allItems[j]] = [allItems[j], allItems[i]];
+            }
+            $container.append(allItems.join(''));
+
+            // Initialize Isotope
+            var $grid = $container.isotope({
+                itemSelector: '.gallery-item',
+                layoutMode: 'fitRows'
+            });
+
+            // Re-layout after images load
+            $grid.imagesLoaded().progress(() => $grid.isotope('layout'));
+
+            // Filter Navigation
+            $('.filter-btn').on('click', function () {
+                $('.filter-btn').removeClass('active');
+                $(this).addClass('active');
+                const f = $(this).attr('data-filter');
+                $grid.isotope({ filter: f === '*' ? '*' : '.' + f });
+            });
+
+            // Lightbox Configuration
+            lightbox.option({
+                'disableScrolling': false, // SET TO FALSE TO ALLOW BACKGROUND SCROLLING
+                'alwaysShowNavOnTouchDevices': true,
+                'wrapAround': true,
+                'positionFromTop': 0
+            });
+        });
+    </script>
+
+</body>
+
+</html>
