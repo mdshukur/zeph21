@@ -385,9 +385,6 @@ body {
  padding-bottom:120px;
 }
 
-@media (max-width: 768px) {
-
-}
 
 /* --- 4. FILTER NAVIGATION --- */
 .filter-nav {
@@ -502,4 +499,28 @@ body {
 .lb-number {
   color: #42dca3 !important;
   font-size: 10px;
+}
+
+
+
+
+.hero-section{
+  margin-bottom: 120px;
+  margin-top: 50px;
+}
+.content-sections {
+    padding-top: 100px;
+}
+.extracontentes{
+padding-top: 120px;
+}
+@media (max-width: 768px) {
+.extracontentes{
+padding-top: 80px;
+}
+.hero-section{
+  margin-bottom: 0px;
+  margin-top: 0px;
+}
+
 }
