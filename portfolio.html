@@ -299,26 +299,29 @@ $(document).ready(function(){
     const $container = $('#js-gallery-grid');
     let allGroups = [];
 
+    // ১. ডাটা জেনারেট করা
     galleryConfig.forEach((item, index) => {
-        const uniqueID = "group-" + index;
+        const uniqueID = "group-" + index; // প্রতিটি কার্ডের জন্য চিরস্থায়ী ইউনিক আইডি
+        
         let groupHTML = `
-            <div class="col-md-3 col-sm-6 col-xs-6 gallery-item ${item.category}">
-                <a href="${item.main}" class="main-link" data-lightbox="all-gallery" data-own-group="${uniqueID}" data-title="${item.title}">
+            <div class="col-md-3 col-sm-6 col-xs-6 gallery-item main-card ${item.category}">
+                <a href="${item.main}" data-lightbox="${uniqueID}" data-title="${item.title}">
                     <div class="img-container">
                         <img src="${item.main}" class="img-responsive">
                         <div class="hover-overlay"><i class="fa fa-plus"></i></div>
                     </div>
                 </a>`;
         
+        // রিলেটেড ইমেজগুলোকেও একই uniqueID তে রাখা হলো
         item.related.forEach((path) => {
-            groupHTML += `<a href="${path}" data-lightbox="${uniqueID}" data-title="${item.title} - View" class="hidden-item"></a>`;
+            groupHTML += `<a href="${path}" data-lightbox="${uniqueID}" data-title="${item.title}" class="hidden-item"></a>`;
         });
 
         groupHTML += `</div>`;
         allGroups.push(groupHTML);
     });
 
-    // Shuffle for "All" tab
+    // ২. র্যান্ডম শাফেল (Shuffle) - এটি শুধু "All" ট্যাবের শুরুর সজ্জা ঠিক করবে
     for (let i = allGroups.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
         [allGroups[i], allGroups[j]] = [allGroups[j], allGroups[i]];
@@ -326,38 +329,30 @@ $(document).ready(function(){
 
     $container.append(allGroups.join(''));
 
+    // ৩. Isotope ইনিশিয়ালাইজ
     var $grid = $container.imagesLoaded(function() {
-        $grid.isotope({ itemSelector: '.gallery-item', layoutMode: 'fitRows' });
+        $grid.isotope({
+            itemSelector: '.main-card',
+            layoutMode: 'fitRows'
+        });
     });
 
-    // --- Dynamic Lightbox Logic ---
+    // ৪. ফিল্টার বাটন লজিক (এখানে স্লাইড লজিক আর বদলাতে হবে না)
     $('.filter-btn').on('click', function() {
         $('.filter-btn').removeClass('active');
         $(this).addClass('active');
         const f = $(this).attr('data-filter');
-
-        // ১. আইসোটোপ ফিল্টার
-        $grid.isotope({ filter: f === '*' ? '*' : '.' + f });
-
-        // ২. স্লাইড লজিক আপডেট
-        if (f === '*') {
-            // "All" মোড: সব মেইন ইমেজ স্লাইড হবে, হিডেনগুলো বাদ
-            $('.main-link').attr('data-lightbox', 'all-gallery');
-            $('.hidden-item').attr('data-lightbox', 'no-show'); 
-        } else {
-            // ফিল্টার মোড: মেইন ইমেজ + হিডেন ইমেজ স্লাইড হবে
-            $('.' + f + ' .main-link').each(function() {
-                const ownGroup = $(this).attr('data-own-group');
-                $(this).attr('data-lightbox', ownGroup);
-            });
-            $('.' + f + ' .hidden-item').each(function() {
-                const parentGroup = $(this).siblings('.main-link').attr('data-own-group');
-                $(this).attr('data-lightbox', parentGroup);
-            });
-        }
+        const filterValue = (f === '*') ? '.main-card' : '.main-card.' + f;
+        $grid.isotope({ filter: filterValue });
     });
 
-    lightbox.option({ 'resizeDuration': 0, 'fadeDuration': 200, 'wrapAround': true });
+    // Lightbox Settings
+    lightbox.option({ 
+        'resizeDuration': 0, 
+        'fadeDuration': 200, 
+        'wrapAround': true,
+        'disableScrolling': false 
+    });
 });
 </script>
 
